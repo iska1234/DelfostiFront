@@ -7,10 +7,10 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          default: '#DABC59',
-          light: '#6A8D9E',
-          dark: '#376C86',
-          fullDark: '#18485f',
+          default: '#1559F5',
+          light: '#56afff',
+          dark: '#152C62',
+          fullDark: '#18243F',
         },
         'background-gray': '#D0CFCD',
         'gray-icons': '#A8A9AD',

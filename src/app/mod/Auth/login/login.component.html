@@ -1,0 +1,107 @@
+<div class="h-screen md:flex">
+  <div
+    class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-primary-default from-0% via-primary-dark via-40% to-primary-fullDark to-100% justify-around items-center hidden"
+    style="box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4)"
+  >
+    <div>
+      <h1 class="text-white font-bold text-4xl font-sans">
+        delfosti
+      </h1>
+      <p class="text-white mt-1">
+        Tech Changes All
+      </p>
+      <a href="https://delfosti.com" target="_blank">
+        <button
+          class="block w-28 b mt-4 py-2 rounded-2xl font-bold mb-2 bg-primary-default text-white hover:bg-primary-light transition"
+        >
+          Read More
+        </button>
+      </a>
+    </div>
+    <div
+      class="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"
+    ></div>
+    <div
+      class="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"
+    ></div>
+    <div
+      class="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"
+    ></div>
+    <div
+      class="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"
+    ></div>
+  </div>
+  <div class="flex md:w-1/2 justify-center py-4 items-center">
+    <form
+      (submit)="login()"
+      class="flex flex-col gap-2 items-center w-3/4 justify-center my-4 px-4 py-20 bg-white rounded-lg"
+      style="
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+        border-right: 2px solid rgba(0, 0, 0, 0.2);
+      "
+    >
+      <h1 class="text-gray-800 font-bold text-3xl mb-1">Hello Again!</h1>
+      <p class="font-normal text-gray-600 mb-7 text-xl">Welcome Back</p>
+      <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4 w-2/3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 text-gray-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <input
+          class="pl-2 outline-none border-none"
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+        />
+      </div>
+      <div class="flex items-center border-2 py-2 px-3 rounded-2xl w-2/3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 text-gray-400"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+
+        <input
+          class="pl-2 outline-none border-none"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+        />
+      </div>
+      <button
+        type="submit"
+        class="block w-1/4 bg-primary-dark text-white hover:bg-primary-default hover:text-white transition mt-4 py-2 rounded-2xl font-semibold mb-2"
+      >
+        Login
+      </button>
+      <p>
+        You do not have an account?
+        <a
+          class="text-black hover:underline hover:text-blue-500 cursor-pointer"
+          [routerLink]="['/register']"
+          >Sign up here</a
+        >
+      </p>
+    </form>
+  </div>
+</div>
