@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IProyecto } from '../../../core/domain/models/IProyecto';
 import { ProjectsUseCases } from '../../../core/domain/usecases/projects.use-case';
 import { HttpProjectsRepository } from '../../../core/domain/repositories/projects-repository';
+import { ProjectUpdateService } from '../../../core/services/projects/project-update.service';
 
 @Component({
   selector: 'w-projects-cards',
@@ -21,11 +22,15 @@ export class WProjectsCardsComponent implements OnInit{
   constructor(
     private projectsUseCases: ProjectsUseCases,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private projectUpdateService: ProjectUpdateService
   ) {}
 
   ngOnInit(): void {
     this.obtenerProyectos();
+    this.projectUpdateService.projectUpdated$.subscribe(() => {
+      this.obtenerProyectos();
+    });
   }
 
   obtenerProyectos() {

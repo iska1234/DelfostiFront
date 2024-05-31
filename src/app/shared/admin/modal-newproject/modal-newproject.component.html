@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Agregar Nuevo Proyecto</h2>
 <mat-dialog-content>
-  <form [formGroup]="addNewProjectForm">
+  <form [formGroup]="addNewProjectForm" (ngSubmit)="onSubmit()">
     <div class="flex flex-col gap-6 p-2">
       <w-input
         controlKey="name"
@@ -31,18 +31,16 @@
         [required]="true"
       ></w-input>
       <div>
-
-        <label for="userId">Jefe Encargado</label>
+        <label for="responsible">Jefe Encargado</label>
         <select
-        formControlName="userId"
-        class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
+          formControlName="responsible"
+          class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
         >
-        <option *ngFor="let user of users$ | async" [value]="user.id">
-          {{ user.name }}
-        </option>
-      </select>
-    </div>
-
+          <option *ngFor="let user of users$ | async" [ngValue]="user.id">
+            {{ user.name }}
+          </option>
+        </select>
+      </div>
 
       <button
         mat-raised-button
