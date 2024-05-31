@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { IAuthRes } from '../../../core/interfaces/IAuthRes';
+import { IAuthRes } from '../../../core/domain/models/IAuthRes';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserDataService } from '../../../core/services/user-data.service';
 import { TokenService } from '../../../core/services/token.service';

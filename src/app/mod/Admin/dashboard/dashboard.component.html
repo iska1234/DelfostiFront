@@ -1,1 +1,9 @@
-<p>dashboard works!</p>
+<div class="flex flex-col min-h-screen justify-start bg-white p-8">
+  <div class="mb-3 pb-3 border-b flex flex-col md:flex-row justify-between">
+    <span class="text-2xl font-bold">Mis proyectos</span>
+    <div class="flex gap-3">
+      <button  mat-raised-button color="primary" (click)="openDialog('0ms', '0ms')">Nuevo Proyecto</button>
+    </div>
+  </div>
+  <w-projects-cards></w-projects-cards>
+</div>

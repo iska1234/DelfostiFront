@@ -6,6 +6,7 @@ export interface IUsersRes {
   role: string;
   age: number;
   projectid: number;
+  projectname?: string;
   created_at: string;
   updated_at: string;
 }

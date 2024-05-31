@@ -1,0 +1,85 @@
+@if(inputType === "onlyText"){
+<input
+  class="px-4 py-2 rounded border border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+  type="text"
+  [formControlName]="controlKey"
+  [placeholder]="placeholder"
+/>
+
+<div
+  class="error"
+  *ngIf="parentFormGroup.get(controlKey)?.errors?.['required'] && (parentFormGroup.get(controlKey)?.dirty || parentFormGroup.get(controlKey)?.touched)"
+>
+  {{ error }}
+</div>
+
+<div
+  class="error"
+  *ngIf="
+    parentFormGroup.get(controlKey)?.hasError('minlength') &&
+    (parentFormGroup.get(controlKey)?.dirty ||
+      parentFormGroup.get(controlKey)?.touched)
+  "
+>
+  The text must be at least {{ minLength }} characters.
+</div>
+<div
+  class="error"
+  *ngIf="
+    parentFormGroup.get(controlKey)?.hasError('maxlength') &&
+    (parentFormGroup.get(controlKey)?.dirty ||
+      parentFormGroup.get(controlKey)?.touched)
+  "
+>
+  The text must not exceed{{ maxLength }} characters.
+</div>
+} @if(inputType === "password"){
+<input
+  class="input"
+  type="password"
+  [formControlName]="controlKey"
+  [placeholder]="placeholder"
+/>
+<div
+  class="error"
+  *ngIf="parentFormGroup.get(controlKey)?.errors?.['required'] && (parentFormGroup.get(controlKey)?.dirty || parentFormGroup.get(controlKey)?.touched)"
+>
+  {{ error }}
+</div>
+} @if(inputType === "email"){
+<input
+  class="px-4 py-2 rounded border border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+  type="email"
+  [formControlName]="controlKey"
+  [placeholder]="placeholder"
+  pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$"
+/>
+<div
+  *ngIf="
+    parentFormGroup.get(controlKey)?.hasError('pattern') &&
+    (parentFormGroup.get(controlKey)?.dirty ||
+      parentFormGroup.get(controlKey)?.touched)
+  "
+>
+  Please enter a valid Gmail email address.
+</div>
+} @if(inputType === "date"){
+<label class="block text-md mb-1 text-gray-950">{{ label }}</label>
+
+<input
+  class="px-4 py-2 rounded border border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+  type="date"
+  pattern="\d{4}-\d{2}-\d{2}"
+  placeholder="yyyy-mm-dd"
+  [formControlName]="controlKey"
+/>
+<div
+  *ngIf="
+    parentFormGroup.get(controlKey)?.hasError('date') &&
+    (parentFormGroup.get(controlKey)?.dirty ||
+      parentFormGroup.get(controlKey)?.touched)
+  "
+>
+  {{ error }}
+</div>
+}

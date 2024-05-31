@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Agregar Nuevo Proyecto</h2>
+<mat-dialog-content>
+  <form [formGroup]="addNewProjectForm">
+    <div class="flex flex-col gap-6 p-2">
+      <w-input
+        controlKey="name"
+        inputType="onlyText"
+        placeholder="Nombre del proyecto"
+        error="El nombre del proyecto es requerido"
+        [required]="true"
+      ></w-input>
+      <w-input
+        controlKey="description"
+        inputType="onlyText"
+        placeholder="Descripción del Proyecto"
+        error="La descripcion del proyecto es requerida"
+        [required]="true"
+      ></w-input>
+      <w-input
+        label="Fecha inicio del proyecto"
+        controlKey="startDate"
+        inputType="date"
+        error="La fecha de inicio del proyecto es requerida"
+        [required]="true"
+      ></w-input>
+      <w-input
+        label="Fecha fin del proyecto"
+        controlKey="endDate"
+        inputType="date"
+        error="La fecha de finalizacion del proyecto es requerida"
+        [required]="true"
+      ></w-input>
+      <div>
+
+        <label for="userId">Jefe Encargado</label>
+        <select
+        formControlName="userId"
+        class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
+        >
+        <option *ngFor="let user of users$ | async" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="w-full text-white p-2"
+      >
+        Registrar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
