@@ -6,5 +6,5 @@ export interface IProyecto {
   endDate: string;
   responsible: number;
   state?: string;
-  fullname?:string;
+  user_name?:string;
 }
