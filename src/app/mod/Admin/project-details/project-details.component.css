@@ -1,14 +1,15 @@
 :host {
   display: block;
 }
-*{
+* {
   font-family: Arial, Helvetica, sans-serif;
 }
 .calendario {
   border-collapse: collapse;
   width: 100%;
 }
-.calendario th, .calendario td {
+.calendario th,
+.calendario td {
   border: 1px solid #ddd;
   padding-inline: 8px;
   text-align: center;
@@ -23,12 +24,12 @@
   background-color: #f2f2f2;
 }
 
-
 .calendarioGantt {
   border-collapse: collapse;
   width: 100%;
 }
-.calendarioGantt th, .calendarioGantt td {
+.calendarioGantt th,
+.calendarioGantt td {
   border-bottom: 1px solid #ddd;
   padding-inline: 4px;
   text-align: center;
@@ -41,4 +42,17 @@
 }
 .calendarioGantt th {
   background-color: #f2f2f2;
+}
+
+.enproceso {
+  background-color: #bfdbfe;
+}
+.porvencer {
+  background-color: #fde047;
+}
+.vencido {
+  background-color: #ef4444;
+}
+.completado {
+  background-color: #22c55e;
 }

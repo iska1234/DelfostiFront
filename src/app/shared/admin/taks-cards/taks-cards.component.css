@@ -1,0 +1,17 @@
+.example-card {
+  max-width: 300px;
+  min-height: 200px;
+}
+
+.enproceso {
+  background-color: #bfdbfe;
+}
+.porvencer {
+  background-color: #fde047;
+}
+.vencido {
+  background-color: #ef4444;
+}
+.completado {
+  background-color: #22c55e;
+}

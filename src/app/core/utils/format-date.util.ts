@@ -24,3 +24,32 @@ export function formatDateSpanish(dateString: string): string {
 
   return `${dayOfWeek} ${day} de ${month} del ${year}`;
 }
+export function obtenerFechaAvance(fechaFin: string): number {
+  let band = 0;
+  const fFin = new Date(fechaFin);
+  const fActual = new Date();
+  const diasDiferencia = calcularRangoDeDias(fFin);
+
+  if (fActual > fFin) {
+    band = 1;
+  } else {
+    if (diasDiferencia <= 3) {
+      band = 3;
+    } else {
+      band = 2;
+    }
+  }
+  return band;
+}
+
+export function calcularRangoDeDias(fechaTermino: Date) {
+  var fechaActual = new Date();
+  var tiempoTermino = fechaTermino.getTime();
+  var tiempoActual = fechaActual.getTime();
+  var diferenciaEnMilisegundos = tiempoTermino - tiempoActual;
+  var diferenciaEnDias = Math.ceil(
+    diferenciaEnMilisegundos / (1000 * 3600 * 24)
+  );
+
+  return diferenciaEnDias;
+}

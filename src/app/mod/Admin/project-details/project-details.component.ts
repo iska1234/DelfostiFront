@@ -15,13 +15,18 @@ import { TasksUseCases } from '../../../core/domain/usecases/tasks.use-case';
 import { HttpTasksRepository } from '../../../core/domain/repositories/tasks-repository';
 import { ModalNewTask } from '../../../shared/admin/modal-newtask/modal-newtask.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.service';
+import { WTaksCardsComponent } from '../../../shared/admin/taks-cards/taks-cards.component';
+import { calcularRangoDeDias, obtenerFechaAvance } from '../../../core/utils/format-date.util';
+import { ViewModeService } from '../../../core/services/projects/view-mode.service';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatButtonModule],
+  imports: [CommonModule, RouterLink, MatButtonModule, MatMenuModule, MatIconModule, WTaksCardsComponent],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css',
   providers: [
@@ -40,7 +45,10 @@ export default class ProjectDetailsComponent {
   mesF = 0;
   año = 0;
   public meses: IMes[] = [];
-  public showGantt: boolean = false;
+  viewMode:string = ''
+  //funciones
+  obtenerFechaAvance = obtenerFechaAvance;
+  calcularRangoDeDias = calcularRangoDeDias;
 
   constructor(
     private tasksUseCases: TasksUseCases,
@@ -48,7 +56,8 @@ export default class ProjectDetailsComponent {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private tasksUpdateService: TasksUpdateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private viewModeService: ViewModeService
   ) {
     this.id = +this.route.snapshot.params['projectId'];
     this.projectsUseCases
@@ -68,10 +77,21 @@ export default class ProjectDetailsComponent {
   }
 
   ngOnInit(): void {
+    this.viewMode = this.viewModeService.getViewMode() || '';
+    this.updateViewMode();
+
     this.tasksUpdateService.taskUpdated$.subscribe(() => {
-      this.dataTasks$ = this.tasksUseCases.getTasksForProject(this.id);
-      this.cdr.detectChanges();
+      this.fetchTasks();
     });
+
+    this.fetchTasks();
+  }
+
+  private updateViewMode() {
+    this.cdr.detectChanges();
+  }
+  private fetchTasks() {
+    this.dataTasks$ = this.tasksUseCases.getTasksForProject(this.id);
   }
 
   openDialog(
@@ -86,9 +106,24 @@ export default class ProjectDetailsComponent {
     });
   }
 
-  changeGantt() {
-    this.showGantt = !this.showGantt;
+  changeCards() {
+    this.viewMode = 'cards';
+    this.viewModeService.setViewMode(this.viewMode);
+    this.updateViewMode();
   }
+
+  changeGantt() {
+    this.viewMode = 'gantt';
+    this.viewModeService.setViewMode(this.viewMode);
+    this.updateViewMode();
+  }
+
+  changeTimeline() {
+    this.viewMode = 'timeline';
+    this.viewModeService.setViewMode(this.viewMode);
+    this.updateViewMode();
+  }
+
 
   obtenerDiasPorRangoDeMeses(
     anio: number,
@@ -137,35 +172,7 @@ export default class ProjectDetailsComponent {
     return dia;
   }
 
-  obtenerFechaAvance(fechaFin: string): number {
-    let band = 0;
-    const fFin = new Date(fechaFin);
-    const fActual = new Date();
-    const diasDiferencia = this.calcularRangoDeDias(fFin);
 
-    if (fActual > fFin) {
-      band = 1;
-    } else {
-      if (diasDiferencia <= 3) {
-        band = 3;
-      } else {
-        band = 2;
-      }
-    }
-    return band;
-  }
-
-  calcularRangoDeDias(fechaTermino: Date) {
-    var fechaActual = new Date();
-    var tiempoTermino = fechaTermino.getTime();
-    var tiempoActual = fechaActual.getTime();
-    var diferenciaEnMilisegundos = tiempoTermino - tiempoActual;
-    var diferenciaEnDias = Math.ceil(
-      diferenciaEnMilisegundos / (1000 * 3600 * 24)
-    );
-
-    return diferenciaEnDias;
-  }
 
   goBack(): void {
     window.history.back();

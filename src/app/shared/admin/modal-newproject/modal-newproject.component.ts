@@ -20,6 +20,7 @@ import { HttpProjectsRepository } from '../../../core/domain/repositories/projec
 import { formatDate } from '../../../core/utils/format-date.util';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectUpdateService } from '../../../core/services/projects/project-update.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'w-modal',
@@ -34,6 +35,7 @@ import { ProjectUpdateService } from '../../../core/services/projects/project-up
     WInput,
     ReactiveFormsModule,
     CommonModule,
+    MatProgressBarModule
   ],
   providers: [
     AdminUseCases,
@@ -45,7 +47,7 @@ import { ProjectUpdateService } from '../../../core/services/projects/project-up
 export class ModalNewProject {
   addNewProjectForm!: FormGroup;
   users$!: Observable<IUsersRes[]>;
-
+  isSubmitting = false;
   constructor(
     public dialogRef: MatDialogRef<ModalNewProject>,
     private formBuilder: FormBuilder,
@@ -75,7 +77,7 @@ export class ModalNewProject {
     if (this.addNewProjectForm.invalid) {
       return;
     }
-
+    this.isSubmitting = true;
     const projectData = {
       name: this.addNewProjectForm.get('name')?.value,
       description: this.addNewProjectForm.get('description')?.value,
@@ -93,6 +95,8 @@ export class ModalNewProject {
       (error) => {
         this.toastr.error('Error al registrar el proyecto', 'Error');
       }
-    );
+    ).add(() => {
+      this.isSubmitting = false;
+    });
   }
 }

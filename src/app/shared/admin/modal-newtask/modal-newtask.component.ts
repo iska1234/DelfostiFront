@@ -21,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TasksUseCases } from '../../../core/domain/usecases/tasks.use-case';
 import { HttpTasksRepository } from '../../../core/domain/repositories/tasks-repository';
 import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'w-modal',
@@ -35,6 +36,7 @@ import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.se
     WInput,
     ReactiveFormsModule,
     CommonModule,
+    MatProgressBarModule
   ],
   providers: [
     AdminUseCases,
@@ -47,7 +49,7 @@ export class ModalNewTask {
   addNewProjectForm!: FormGroup;
   users$!: Observable<IUsersRes[]>;
   projectId!: number;
-
+  isSubmitting = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalNewTask>,
@@ -80,13 +82,14 @@ export class ModalNewTask {
     if (this.addNewProjectForm.invalid) {
       return;
     }
+    this.isSubmitting = true;
 
     const taskData = {
       projectid: this.projectId,
       taskname: this.addNewProjectForm.get('taskname')?.value,
       taskdescription: this.addNewProjectForm.get('taskdescription')?.value,
       startdate: formatDate(this.addNewProjectForm.get('startdate')?.value),
-      enddate:formatDate(this.addNewProjectForm.get('enddate')?.value),
+      enddate: formatDate(this.addNewProjectForm.get('enddate')?.value),
       responsible: this.addNewProjectForm.get('responsible')?.value,
     };
     this.tasksUseCases.addNewTask(taskData).subscribe(
@@ -98,6 +101,8 @@ export class ModalNewTask {
       (error) => {
         this.toastr.error('Error al registrar el proyecto', 'Error');
       }
-    );
+    ).add(() => {
+      this.isSubmitting = false;
+    });
   }
 }
