@@ -1,1 +1,31 @@
-<p>tareas works!</p>
+<div class="p-4 rounded-xl bg-white" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); transform: translateZ(0)">
+  <table class="w-full">
+    <thead class="text-center">
+      <tr class="">
+        <ng-container *ngFor="let item of tableThead">
+          <th class="border-b">{{ item }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngIf="data$ | async as tareas">
+        <tr *ngFor="let tarea of tareas; index as $index" class="border-b">
+          <ng-container *ngIf="tarea.responsible === userId">
+            <td class="py-2">{{ tarea.taskname }}</td>
+            <td class="text-center">{{ tarea.enddate }}</td>
+            <td class="text-center">{{ tarea.state }}</td>
+            <td class="text-center">
+              <button
+                [routerLink]="['tarea-details/' + tarea.taskid]"
+                class="bg-blue-200 hover:bg-blue-300 text-blue-700 hover:text-blue-900 text-sm px-2 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+              >
+                Ver
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

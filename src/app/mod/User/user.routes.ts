@@ -11,7 +11,7 @@ export const USER_ROUTES: Routes = [
     component: InicioComponent,
     children: [
       { path: '', component: TareasComponent },
-
+      { path: 'tarea-details/:taskId', component: TareasComponent },
 
     ],
   },

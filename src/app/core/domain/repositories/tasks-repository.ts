@@ -27,12 +27,13 @@ export class HttpTasksRepository implements TasksRepository {
     );
   }
 
-  getTasksForUser(userId: string): Observable<ITaskRes[]> {
+  getTasksForUser(userId: string) {
     const url = `${this.baseUrl}/all-user/${userId}`;
     const headers = getAuthHeaders(this.tokenService);
-    return this.http.get<ITaskRes[]>(url, { headers });
+    return this.http.get<{ data: ITaskRes[] }>(url, { headers }).pipe(
+      map(response => response.data)
+    );
   }
-
   addNewTask(task: ITaskRes): Observable<any> {
     const url = `${this.baseUrl}/create`;
     const headers = getAuthHeaders(this.tokenService);
