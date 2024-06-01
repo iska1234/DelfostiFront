@@ -46,6 +46,6 @@ export class WProjectsCardsComponent implements OnInit{
   }
 
   irAlProyecto(id: number) {
-    this.router.navigate(['inicio', id]);
+    this.router.navigate(['/details', id]);
   }
 }

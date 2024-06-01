@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+*{
+  font-family: Arial, Helvetica, sans-serif;
+}
+.calendario {
+  border-collapse: collapse;
+  width: 100%;
+}
+.calendario th, .calendario td {
+  border: 1px solid #ddd;
+  padding-inline: 8px;
+  text-align: center;
+
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+.calendario th {
+  background-color: #f2f2f2;
+}
+
+
+.calendarioGantt {
+  border-collapse: collapse;
+  width: 100%;
+}
+.calendarioGantt th, .calendarioGantt td {
+  border-bottom: 1px solid #ddd;
+  padding-inline: 4px;
+  text-align: center;
+
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+.calendarioGantt th {
+  background-color: #f2f2f2;
+}

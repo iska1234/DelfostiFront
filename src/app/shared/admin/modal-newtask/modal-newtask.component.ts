@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Injectable } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -6,6 +6,7 @@ import {
   MatDialogClose,
   MatDialogTitle,
   MatDialogContent,
+  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { WInput } from '../../ui/input/input.component';
@@ -15,15 +16,15 @@ import { IUsersRes } from '../../../core/domain/models/IUsersRes';
 import { Observable } from 'rxjs';
 import { HttpAdminRepository } from '../../../core/domain/repositories/admin-repository';
 import { AdminUseCases } from '../../../core/domain/usecases/admin.use-case';
-import { ProjectsUseCases } from '../../../core/domain/usecases/projects.use-case';
-import { HttpProjectsRepository } from '../../../core/domain/repositories/projects-repository';
 import { formatDate } from '../../../core/utils/format-date.util';
 import { ToastrService } from 'ngx-toastr';
-import { ProjectUpdateService } from '../../../core/services/projects/project-update.service';
+import { TasksUseCases } from '../../../core/domain/usecases/tasks.use-case';
+import { HttpTasksRepository } from '../../../core/domain/repositories/tasks-repository';
+import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.service';
 
 @Component({
   selector: 'w-modal',
-  templateUrl: 'modal-newproject.component.html',
+  templateUrl: 'modal-newtask.component.html',
   standalone: true,
   imports: [
     MatButtonModule,
@@ -38,28 +39,32 @@ import { ProjectUpdateService } from '../../../core/services/projects/project-up
   providers: [
     AdminUseCases,
     HttpAdminRepository,
-    ProjectsUseCases,
-    HttpProjectsRepository,
+    TasksUseCases,
+    HttpTasksRepository,
   ],
 })
-export class ModalNewProject {
+export class ModalNewTask {
   addNewProjectForm!: FormGroup;
   users$!: Observable<IUsersRes[]>;
+  projectId!: number;
+
 
   constructor(
-    public dialogRef: MatDialogRef<ModalNewProject>,
+    public dialogRef: MatDialogRef<ModalNewTask>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private cdr: ChangeDetectorRef,
     private adminUseCases: AdminUseCases,
-    private projectsUseCases: ProjectsUseCases,
-    private projectUpdateService: ProjectUpdateService
-  ) {}
+    private tasksUseCases: TasksUseCases,
+    private taskUpdateService: TasksUpdateService,
+  ) {
+    this.projectId = data.projectId;
+  }
 
   ngOnInit(): void {
     this.addNewProjectForm = this.formBuilder.group({
-      name: [''],
-      description: [''],
+      taskName: [''],
+      taskDescription: [''],
       startDate: [''],
       endDate: [''],
       responsible: [''],
@@ -76,18 +81,19 @@ export class ModalNewProject {
       return;
     }
 
-    const projectData = {
-      name: this.addNewProjectForm.get('name')?.value,
-      description: this.addNewProjectForm.get('description')?.value,
-      startDate: formatDate(this.addNewProjectForm.get('startDate')?.value),
-      endDate:formatDate(this.addNewProjectForm.get('endDate')?.value),
+    const taskData = {
+      projectid: this.projectId,
+      taskname: this.addNewProjectForm.get('taskname')?.value,
+      taskdescription: this.addNewProjectForm.get('taskdescription')?.value,
+      startdate: formatDate(this.addNewProjectForm.get('startdate')?.value),
+      enddate:formatDate(this.addNewProjectForm.get('enddate')?.value),
       responsible: this.addNewProjectForm.get('responsible')?.value,
     };
-
-    this.projectsUseCases.saveNewProject(projectData).subscribe(
+    console.log('Task Data:', taskData);
+    this.tasksUseCases.addNewTask(taskData).subscribe(
       (response) => {
         this.toastr.success('Proyecto registrado exitosamente.', 'Success');
-        this.projectUpdateService.notifyProjectUpdated();
+        this.taskUpdateService.notifyTaskUpdated();
         this.dialogRef.close();
       },
       (error) => {

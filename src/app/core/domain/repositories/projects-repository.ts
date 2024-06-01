@@ -22,7 +22,7 @@ export class HttpProjectsRepository implements ProjectsRepository {
   }
 
   getMonthsProjects(id: string): Observable<any> {
-    const url = `${this.baseUrl}/fechas/${id}`;
+    const url = `${this.baseUrl}/dates/${id}`;
     const headers = getAuthHeaders(this.tokenService);
     return this.http.get<any>(url, { headers }).pipe(
       map(response => response.data)
