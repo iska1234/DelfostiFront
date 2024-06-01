@@ -5,7 +5,10 @@
 </p>
 
 URL Software: https://delfosti-software.netlify.app
-Notes: The server sometimes becomes down which requests can take up to 50 seconds maximum due to relogging.
+
+Backend Repository: https://github.com/iska1234/DelfostiBack
+
+### Notes: The server sometimes becomes down which requests can take up to 50 seconds maximum due to relogging.
 
 ## 📝 Table of Contents
 
@@ -44,7 +47,11 @@ git clone https://github.com/iska1234/DelfostiFront.git
 npm install
 ```
 
-3. Start the server:
+3. Configure the url in case you want to mount locally or using the deployed backend
+![image](https://github.com/iska1234/DelfostiFront/assets/119825666/0ca045fe-24b6-433d-b237-986658b44373)
+
+
+4. Start the server:
 ```bash
 ng serve
 ```
