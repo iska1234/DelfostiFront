@@ -8,7 +8,7 @@ URL Software: https://delfosti-software.netlify.app
 
 Backend Repository: https://github.com/iska1234/DelfostiBack
 
-### Notes: The server sometimes becomes down which requests can take up to 50 seconds maximum due to relogging.
+### Notes: The server sometimes becomes down which requests can take up to 50 seconds maximum due to relogging. Thanks
 
 ## 📝 Table of Contents
 
