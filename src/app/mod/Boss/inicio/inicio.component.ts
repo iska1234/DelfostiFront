@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { WHeaderComponent } from '../../../shared/ui/header/header.component';
 import { WFooterComponent } from '../../../shared/ui/footer/footer.component';
-import { SidebarComponent } from '../../../shared/user/sidebar/sidebar.component';
+import { SidebarComponent } from '../../../shared/boss/sidebar/sidebar.component';
+
 
 @Component({
   selector: 'inicio',

@@ -30,4 +30,8 @@ export class TasksUseCases {
   updateTaskCompleted(taskId: number): Observable<any> {
     return this.tasksRepository.updateTaskCompleted(taskId);
   }
+
+  updateTaskDeclined(taskId: number): Observable<any> {
+    return this.tasksRepository.updateTaskDeclined(taskId);
+  }
 }

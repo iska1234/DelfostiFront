@@ -1,0 +1,12 @@
+.estado-en-proceso {
+  background-color: #bfdbfe; /* Light Blue */
+}
+.estado-por-vencer {
+  background-color: #fef08a; /* Yellow */
+}
+.estado-vencido {
+  background-color: #f87171; /* Red */
+}
+.estado-completo {
+  background-color: #4ade80; /* Green */
+}

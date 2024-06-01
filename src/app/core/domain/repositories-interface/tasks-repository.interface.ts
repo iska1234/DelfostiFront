@@ -9,4 +9,5 @@ export interface TasksRepository {
   getTaskById(taskId: number): Observable<ITaskRes>;
   updateTaskForRevision(taskId: number): Observable<any>;
   updateTaskCompleted(taskId: number): Observable<any>;
+  updateTaskDeclined(taskId: number): Observable<any>;
 }

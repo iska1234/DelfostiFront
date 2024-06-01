@@ -15,4 +15,5 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'task-details/:taskId', component: TasksDetailsComponent },
     ],
   },
+  { path: '**', redirectTo: '' },
 ];

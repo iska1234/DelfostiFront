@@ -13,7 +13,7 @@ export const USER_ROUTES: Routes = [
     children: [
       { path: '', component: TareasComponent },
       { path: 'tarea-details/:taskId', component: TareaDetailsComponent },
-
     ],
   },
+  { path: '**', redirectTo: '' },
 ];

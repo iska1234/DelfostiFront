@@ -23,4 +23,11 @@ export class HttpAdminRepository implements AdminRepository {
       .get<any>(url, { headers })
       .pipe(map((response) => response.data));
   }
+  getUserProjectId(userId: number): Observable<number> {
+    const url = `${BASE_URL}/admin/users/projectId/${userId}`;
+    const headers = getAuthHeaders(this.tokenService);
+    return this.http
+      .get<any>(url, { headers })
+      .pipe(map((response) => response.projectId?.projectid));
+  }
 }

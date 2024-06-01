@@ -25,15 +25,16 @@
         </div>
         <div class="flex gap-4 items-center">
           <strong>Avance de la tarea: </strong>
-          <span class="bg-green-100 text-gray-950 rounded-lg px-2 py-1">{{
-            tarea.advance
-          }}%</span>
+          <span class="bg-green-100 text-gray-950 rounded-lg px-2 py-1">{{ formatPercentage(tarea.advance || 0) }}</span>
         </div>
       </div>
       <div class="w-full mt-16 items-center flex justify-center">
-        <div class="w-56">
-          <button mat-raised-button color="primary" (click)="sendForRevision(idTarea)" [disabled]="tarea.state === 'Completada' || tarea.state === 'Revisión'">
-            Enviar para Revisión
+        <div class="w-1/2 flex gap-8 items-center">
+          <button mat-raised-button color="primary" (click)="sendCompleted(idTarea)" [disabled]="tarea.state === 'Completada' || tarea.state === 'Elaboración'" >
+            Tarea Completada
+          </button>
+          <button mat-raised-button color="accent" (click)="sendDeclined(idTarea)"  [disabled]="tarea.state === 'Observación'">
+            Enviar para observación
           </button>
         </div>
       </div>

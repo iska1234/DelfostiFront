@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 import { userGuard } from './core/guards/user.guard';
+import { bossGuard } from './core/guards/boss.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,5 +27,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./mod/User/user.routes').then((r) => r.USER_ROUTES),
       canMatch:[userGuard]
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./mod/Boss/boss.routes').then((r) => r.BOSS_ROUTES),
+      canMatch:[bossGuard]
   },
 ];

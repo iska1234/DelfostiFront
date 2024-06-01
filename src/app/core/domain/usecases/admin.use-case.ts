@@ -11,4 +11,7 @@ export class AdminUseCases {
   execute(): Observable<IUsersRes[]> {
     return this.adminRepository.getAllUsers();
   }
+  getUserProjectId(userId: number): Observable<number> {
+    return this.adminRepository.getUserProjectId(userId);
+  }
 }

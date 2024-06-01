@@ -56,4 +56,10 @@ export class HttpTasksRepository implements TasksRepository {
     const headers = getAuthHeaders(this.tokenService);
     return this.http.patch<any>(url, {}, { headers });
   }
+
+  updateTaskDeclined(taskId: number): Observable<any> {
+    const url = `${BASE_URL}/tasks/update/declined/${taskId}`;
+    const headers = getAuthHeaders(this.tokenService);
+    return this.http.patch<any>(url, {}, { headers });
+  }
 }
