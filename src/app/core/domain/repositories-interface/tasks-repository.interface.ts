@@ -7,4 +7,6 @@ export interface TasksRepository {
   getTasksForUser(userId: string): Observable<ITaskRes[]>;
   addNewTask(task: ITaskRes): Observable<any>;
   getTaskById(taskId: number): Observable<ITaskRes>;
+  updateTaskForRevision(taskId: number): Observable<any>;
+  updateTaskCompleted(taskId: number): Observable<any>;
 }

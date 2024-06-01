@@ -5,16 +5,16 @@ import { getAuthHeaders } from '../../utils/auth-headers.util';
 import { TokenService } from '../../services/token.service';
 import { ProjectsRepository } from '../repositories-interface/projects-repository.interface';
 import { IProyecto } from '../models/IProyecto';
+import { BASE_URL } from '../../utils/enviroment-url';
 
 
 @Injectable()
 export class HttpProjectsRepository implements ProjectsRepository {
-  private baseUrl = 'http://localhost:5500/projects';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   getAllProjects(): Observable<IProyecto[]> {
-    const url = `${this.baseUrl}/all`;
+    const url = `${BASE_URL}/projects/all`;
     const headers = getAuthHeaders(this.tokenService);
     return this.http.get<any>(url, { headers }).pipe(
       map(response => response.data)
@@ -22,7 +22,7 @@ export class HttpProjectsRepository implements ProjectsRepository {
   }
 
   getMonthsProjects(id: string): Observable<any> {
-    const url = `${this.baseUrl}/dates/${id}`;
+    const url = `${BASE_URL}/projects/dates/${id}`;
     const headers = getAuthHeaders(this.tokenService);
     return this.http.get<any>(url, { headers }).pipe(
       map(response => response.data)
@@ -30,7 +30,7 @@ export class HttpProjectsRepository implements ProjectsRepository {
   }
 
   saveNewProject(body: IProyecto): Observable<any> {
-    const url = `${this.baseUrl}/create`;
+    const url = `${BASE_URL}/projects/create`;
     const headers = getAuthHeaders(this.tokenService);
     return this.http.post<any>(url, body, { headers });
   }

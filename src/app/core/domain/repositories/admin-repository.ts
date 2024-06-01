@@ -1,3 +1,4 @@
+import { BASE_URL } from './../../utils/enviroment-url';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -11,12 +12,12 @@ import { AdminRepository } from '../repositories-interface/admin-repository.inte
 
 @Injectable()
 export class HttpAdminRepository implements AdminRepository {
-  private baseUrl = 'http://localhost:5500/admin';
+
 
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   getAllUsers(): Observable<IUsersRes[]> {
-    const url = `${this.baseUrl}/users/all`;
+    const url = `${BASE_URL}/admin/users/all`;
     const headers = getAuthHeaders(this.tokenService);
     return this.http
       .get<any>(url, { headers })

@@ -89,7 +89,6 @@ export class ModalNewTask {
       enddate:formatDate(this.addNewProjectForm.get('enddate')?.value),
       responsible: this.addNewProjectForm.get('responsible')?.value,
     };
-    console.log('Task Data:', taskData);
     this.tasksUseCases.addNewTask(taskData).subscribe(
       (response) => {
         this.toastr.success('Proyecto registrado exitosamente.', 'Success');

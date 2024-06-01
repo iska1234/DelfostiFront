@@ -23,4 +23,11 @@ export class TasksUseCases {
     return this.tasksRepository.getTaskById(taskId);
   }
 
+  updateTaskForRevision(taskId: number): Observable<any> {
+    return this.tasksRepository.updateTaskForRevision(taskId);
+  }
+
+  updateTaskCompleted(taskId: number): Observable<any> {
+    return this.tasksRepository.updateTaskCompleted(taskId);
+  }
 }

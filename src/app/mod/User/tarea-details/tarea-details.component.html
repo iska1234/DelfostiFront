@@ -1,1 +1,44 @@
-<p>tarea-details works!</p>
+@if ($tarea | async ; as tarea){
+<div class="flex flex-col md:flex-row gap-3 rounded-xl h-1/2 bg-slate-50">
+  <div class="flex-1">
+    <div class="bg-white h-full border rounded-xl p-2 flex flex-col shadow-sm">
+      <div class="border-b">
+        <span class="font-bold">{{ tarea.taskname }}</span>
+      </div>
+      <div class="border-b py-2 mb-2">
+        <span>{{ tarea.taskdescription }}</span>
+      </div>
+      <div class="flex flex-col gap-3 justify-start">
+        <div class="flex gap-4 items-center">
+          <strong>Fecha de Inicio: </strong>
+          <span class="bg-blue-100 text-gray-950 rounded-lg px-2 py-1">{{ formatDate(tarea.startdate) }}</span>
+        </div>
+        <div class="flex gap-4 items-center">
+          <strong>Fecha de fin de tarea: </strong>
+          <span class="bg-blue-100 text-gray-950 rounded-lg px-2 py-1">{{ formatDate(tarea.enddate) }}</span>
+        </div>
+        <div class="flex gap-4 items-center">
+          <strong>Estado de la tarea: </strong>
+          <span class="bg-green-100 text-gray-950 rounded-lg px-2 py-1">{{
+            tarea.state
+          }}</span>
+        </div>
+        <div class="flex gap-4 items-center">
+          <strong>Avance de la tarea: </strong>
+          <span class="bg-green-100 text-gray-950 rounded-lg px-2 py-1">{{
+            tarea.advance
+          }}%</span>
+        </div>
+      </div>
+      <div class="w-full mt-16 items-center flex justify-center">
+        <div class="w-56">
+          <button mat-raised-button color="primary" (click)="sendForRevision(idTarea)">
+            Enviar para Revisión
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+}
