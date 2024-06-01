@@ -14,7 +14,16 @@
           <ng-container *ngIf="tarea.responsible === userId">
             <td class="py-2">{{ tarea.taskname }}</td>
             <td class="text-center">{{ tarea.enddate }}</td>
-            <td class="text-center">{{ tarea.state }}</td>
+            <td
+            class="text-center"
+            [ngClass]="{
+              'estado-en-proceso': tarea.state === 'Elaboración',
+              'estado-por-vencer': tarea.state === 'Revisión',
+              'estado-vencido': tarea.state === 'Observación',
+              'estado-completo': tarea.state === 'Completada'
+            }"
+          > {{ tarea.state }}
+        </td>
             <td class="text-center">
               <button
                 [routerLink]="['tarea-details/' + tarea.taskid]"

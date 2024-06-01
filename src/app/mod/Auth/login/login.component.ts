@@ -9,6 +9,7 @@ import { UserDataService } from '../../../core/services/user-data.service';
 import { TokenService } from '../../../core/services/token.service';
 import { JwtDecoderService } from '../../../core/services/jwt-decoder.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ViewModeService } from '../../../core/services/projects/view-mode.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export default class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private viewModeService: ViewModeService
   ) { }
 
   login(): void {
@@ -44,6 +46,7 @@ export default class LoginComponent {
         this.router.navigate(['/']);
         this.toastr.success('Login Exitoso.', 'Success');
         this.loading = false;
+        this.viewModeService.setViewMode('cards');
       },
       error: (err) => {
         this.toastr.error('Credenciales Inválidas', 'Error');

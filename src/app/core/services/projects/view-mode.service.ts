@@ -15,4 +15,7 @@ export class ViewModeService {
   getViewMode(): string | null {
     return sessionStorage.getItem(this.SESSION_STORAGE_KEY);
   }
+  removeViewMode(): void {
+    sessionStorage.removeItem(this.SESSION_STORAGE_KEY);
+  }
 }

@@ -7,7 +7,7 @@ import {
 import { ITaskRes } from '../../../core/domain/models/ITask';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IMes } from '../../../core/domain/models/IMes';
 import { ProjectsUseCases } from '../../../core/domain/usecases/projects.use-case';
 import { HttpProjectsRepository } from '../../../core/domain/repositories/projects-repository';
@@ -22,11 +22,12 @@ import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.se
 import { WTaksCardsComponent } from '../../../shared/admin/taks-cards/taks-cards.component';
 import { calcularRangoDeDias, obtenerFechaAvance } from '../../../core/utils/format-date.util';
 import { ViewModeService } from '../../../core/services/projects/view-mode.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatButtonModule, MatMenuModule, MatIconModule, WTaksCardsComponent],
+  imports: [CommonModule, RouterLink, MatButtonModule, MatMenuModule, MatIconModule, WTaksCardsComponent, FormsModule],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css',
   providers: [
@@ -39,7 +40,8 @@ import { ViewModeService } from '../../../core/services/projects/view-mode.servi
 })
 export default class ProjectDetailsComponent {
   dataTasks$: Observable<ITaskRes[]>;
-
+  filteredTasks$!: Observable<ITaskRes[]>;
+  stateFilter: string = 'all';
   id: number = 0;
   mesI = 0;
   mesF = 0;
@@ -85,6 +87,7 @@ export default class ProjectDetailsComponent {
     });
 
     this.fetchTasks();
+    this.filterTasks(this.stateFilter);
   }
 
   private updateViewMode() {
@@ -172,8 +175,17 @@ export default class ProjectDetailsComponent {
     return dia;
   }
 
-
-
+  filterTasks(state: string) {
+    this.filteredTasks$ = this.dataTasks$.pipe(
+      map(tasks => {
+        if (state === 'all') {
+          return tasks;
+        }
+        return tasks.filter(task => task.state === state);
+      })
+    );
+    this.cdr.detectChanges();
+  }
   goBack(): void {
     window.history.back();
   }

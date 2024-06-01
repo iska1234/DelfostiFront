@@ -7,7 +7,9 @@
   Volver
 </button>
 <div class="w-full bg-white flex justify-between gap-3 p-4 border-b mb-3">
-  <div class="w-1/3 flex gap-3">
+  <div class="flex flex-col gap-4">
+  <h1 class="font-bold">Guía segun la fecha</h1>
+  <div class="w-full flex gap-3">
     <div class="flex items-center gap-2">
       <div class="bg-blue-200 rounded-full w-4 h-4 text-transparent">.</div>
       <span>En Proceso</span>
@@ -26,6 +28,7 @@
     </div>
   </div>
 
+</div>
   <div class="flex gap-3 items-center">
     <button
       (click)="openDialog('0ms', '0ms')"
@@ -72,148 +75,170 @@
 
 <ng-container *ngIf="viewMode !== 'cards'">
   @if (meses) {
-    <div  class="flex h-full w-full m-auto">
-      <div>
-        <table class="calendario">
-          <tr>
-            <th>Tareas</th>
-            <th>%Avance</th>
-          </tr>
-          <tr>
-            <th></th>
-            <th></th>
-      </tr>
-      @if(dataTasks$ | async; as data){ @for (tareas of data; track $index) {
-      <tr>
-        <td class="border">
-          <a
-          [routerLink]="['/task-details/' + tareas.taskid]"
-          class="cursor-pointer hover:text-blue-500"
-            >{{ tareas.taskname }}</a
+  <div class="flex h-full w-full m-auto">
+    <div>
+      <table class="calendario">
+        <tr>
+          <th>Tareas</th>
+          <th>%Avance</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+        @if(dataTasks$ | async; as data){ @for (tareas of data; track $index) {
+        <tr>
+          <td class="border">
+            <a
+              [routerLink]="['/task-details/' + tareas.taskid]"
+              class="cursor-pointer hover:text-blue-500"
+              >{{ tareas.taskname }}</a
+            >
+          </td>
+          <td
+            class="border font-bold text-black"
+            [ngClass]="{
+              'text-white': obtenerFechaAvance(tareas.enddate) === 1
+            }"
+            [style.backgroundColor]="
+              tareas.advance === 100
+                ? '#53C65F'
+                : obtenerFechaAvance(tareas.enddate) === 1
+                ? '#EF4444'
+                : obtenerFechaAvance(tareas.enddate) === 2
+                ? '#BFDBFE'
+                : 'yellow'
+            "
           >
-        </td>
-        <td
-          class="border font-bold text-black"
-          [ngClass]="{ 'text-white': obtenerFechaAvance(tareas.enddate) === 1 }"
-          [style.backgroundColor]="
-            tareas.advance === 100
-              ? '#53C65F'
-              : obtenerFechaAvance(tareas.enddate) === 1
-              ? '#EF4444'
-              : obtenerFechaAvance(tareas.enddate) === 2
-              ? '#BFDBFE'
-              : 'yellow'
-          "
-        >
-          {{ tareas.advance }}%
-        </td>
-      </tr>
+            {{ tareas.advance }}%
+          </td>
+        </tr>
 
-      } }
-    </table>
-  </div>
+        } }
+      </table>
+    </div>
 
-
-  <div *ngIf="viewMode==='timeline'" class="bg-white overflow-x-scroll w-[100%] h-full">
-    <table class="calendario">
-      <tr>
-        @for (mes of meses; track $index) {
-        <th [colSpan]="mes.dias.length">
-          {{ mes.nombre | uppercase }}
-        </th>
-        }
-      </tr>
-      <tr class="bg-slate-100 overflow-hidden">
-        @for (mes of meses; track $index) { @for (dia of mes.dias; track $index)
-        {
+    <div
+      *ngIf="viewMode === 'timeline'"
+      class="bg-white overflow-x-scroll w-[100%] h-full"
+    >
+      <table class="calendario">
+        <tr>
+          @for (mes of meses; track $index) {
+          <th [colSpan]="mes.dias.length">
+            {{ mes.nombre | uppercase }}
+          </th>
+          }
+        </tr>
+        <tr class="bg-slate-100 overflow-hidden">
+          @for (mes of meses; track $index) { @for (dia of mes.dias; track
+          $index) {
           <td class="bg-slate-200">
-          <div class="overflow-visible w-[10px]">
-            <span class="text-[10px]">{{ dia }}</span>
-          </div>
-        </td>
-      } }
-      </tr>
-      @if(dataTasks$ |async; as data){ @for (tarea of data; track $index) {
+            <div class="overflow-visible w-[10px]">
+              <span class="text-[10px]">{{ dia }}</span>
+            </div>
+          </td>
+          } }
+        </tr>
+        @if(dataTasks$ |async; as data){ @for (tarea of data; track $index) {
         <tr class="relative overflow-hidden">
-          @for (mes of meses; track $index) { @for (dia of mes.dias; track $index)
-            {
-        <!-- barra de dias -->
-        <td class="bg-white">
-          @if (getMonthFromDate(tarea.startdate) === mes.numero) { @if ($index
+          @for (mes of meses; track $index) { @for (dia of mes.dias; track
+          $index) {
+          <!-- barra de dias -->
+          <td class="bg-white">
+            @if (getMonthFromDate(tarea.startdate) === mes.numero) { @if ($index
             +1 === obtenerDia(tarea.startdate)) {
-              <div
+            <div
               [style.backgroundColor]="tarea.color"
               class="bg-red-500 absolute h-5 rounded-lg top-1 overflow-hidden text-slate-800 text-sm"
-            [style.width.px]="
-              obtenerCantidadDias(tarea.startdate, tarea.enddate) * 26.6
-            "
-            style="box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2)"
-          >
-            del
-            {{ $index + 1 }}
-            al
-            {{ obtenerDia(tarea.enddate) }}
-          </div>
-        } }
-      </td>
-        } }
-      </tr>
-      } }
-    </table>
-  </div>
-
-  <div *ngIf="viewMode==='gantt'"class="bg-white overflow-x-scroll w-[100%] h-full">
-    <table class="calendarioGantt">
-      <tr>
-        @for (mes of meses; track $index) {
-        <th [colSpan]="mes.dias.length">
-          {{ mes.nombre | uppercase }}
-        </th>
-        }
-      </tr>
-      <tr class="bg-slate-100 overflow-hidden">
-        @for (mes of meses; track $index) { @for (dia of mes.dias; track $index)
-        {
-        <td class="bg-slate-200 w-1">
-          <div class="overflow-visible w-1"></div>
-        </td>
-        } }
-      </tr>
-      @if(dataTasks$ |async; as data){ @for (tarea of data; track $index) {
-        <tr class="relative overflow-hidden">
-        @for (mes of meses; track $index) { @for (dia of mes.dias; track $index)
-          {
-        <td
-          class="bg-white"
-          [ngClass]="{ 'border-r': dia === mes.dias.length }"
-        >
-        @if (getMonthFromDate(tarea.startdate) === mes.numero) { @if ($index
-          +1 === obtenerDia(tarea.startdate)) {
-            <div
-            [style.backgroundColor]="tarea.color"
-            class="bg-red-500 absolute h-3 rounded-sm top-1 overflow-hidden text-slate-800 text-sm"
-            [style.width.px]="
-              obtenerCantidadDias(tarea.startdate, tarea.enddate) * 13
+              [style.width.px]="
+                obtenerCantidadDias(tarea.startdate, tarea.enddate) * 26.6
               "
-            style="box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2)"
-            ></div>
+              style="box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2)"
+            >
+              del
+              {{ $index + 1 }}
+              al
+              {{ obtenerDia(tarea.enddate) }}
+            </div>
+            } }
+          </td>
           } }
-        </td>
-      } }
-    </tr>
-      } }
-    </table>
-  </div>
+        </tr>
+        } }
+      </table>
+    </div>
 
-</div>
-}
+    <div
+      *ngIf="viewMode === 'gantt'"
+      class="bg-white overflow-x-scroll w-[100%] h-full"
+    >
+      <table class="calendarioGantt">
+        <tr>
+          @for (mes of meses; track $index) {
+          <th [colSpan]="mes.dias.length">
+            {{ mes.nombre | uppercase }}
+          </th>
+          }
+        </tr>
+        <tr class="bg-slate-100 overflow-hidden">
+          @for (mes of meses; track $index) { @for (dia of mes.dias; track
+          $index) {
+          <td class="bg-slate-200 w-1">
+            <div class="overflow-visible w-1"></div>
+          </td>
+          } }
+        </tr>
+        @if(dataTasks$ |async; as data){ @for (tarea of data; track $index) {
+        <tr class="relative overflow-hidden">
+          @for (mes of meses; track $index) { @for (dia of mes.dias; track
+          $index) {
+          <td
+            class="bg-white"
+            [ngClass]="{ 'border-r': dia === mes.dias.length }"
+          >
+            @if (getMonthFromDate(tarea.startdate) === mes.numero) { @if ($index
+            +1 === obtenerDia(tarea.startdate)) {
+            <div
+              [style.backgroundColor]="tarea.color"
+              class="bg-red-500 absolute h-3 rounded-sm top-1 overflow-hidden text-slate-800 text-sm"
+              [style.width.px]="
+                obtenerCantidadDias(tarea.startdate, tarea.enddate) * 13
+              "
+              style="box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2)"
+            ></div>
+            } }
+          </td>
+          } }
+        </tr>
+        } }
+      </table>
+    </div>
+  </div>
+  }
 </ng-container>
 
+<div *ngIf="viewMode === 'cards'" class="mb-8">
+  <label for="stateFilter">Filtrar por estado:</label>
+  <select class="px-4 py-2 rounded border border-gray-300 focus:border-blue-500 focus:outline-none" id="stateFilter" [(ngModel)]="stateFilter" (change)="filterTasks(stateFilter)">
+    <option value="all">Todos</option>
+    <option value="Elaboración">Elaboración</option>
+    <option value="Revisión">Revisión</option>
+    <option value="Completada">Completada</option>
+    <option value="Observación">Observación</option>
+  </select>
+</div>
+
 <div
-*ngIf="viewMode==='cards'"
-class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+  *ngIf="viewMode === 'cards'"
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
 >
-  <ng-container *ngIf="dataTasks$ | async as data">
-    <w-taks-cards *ngFor="let tarea of data" [task]="tarea"></w-taks-cards>
+  <ng-container *ngIf="filteredTasks$ | async as data">
+    <ng-container *ngIf="data.length > 0; else noResults">
+      <w-taks-cards *ngFor="let tarea of data" [task]="tarea"></w-taks-cards>
+    </ng-container>
+    <ng-template #noResults>
+      <h1 class="font-bold">No hay tareas en el estado: {{ stateFilter }}</h1>
+    </ng-template>
   </ng-container>
 </div>
