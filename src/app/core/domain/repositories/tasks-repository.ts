@@ -38,4 +38,11 @@ export class HttpTasksRepository implements TasksRepository {
     const headers = getAuthHeaders(this.tokenService);
     return this.http.post<any>(url, task, { headers });
   }
+  getTaskById(taskId: number): Observable<ITaskRes> {
+    const url = `${this.baseUrl}/details/${taskId}`;
+    const headers = getAuthHeaders(this.tokenService);
+    return this.http.get<any>(url, { headers }).pipe(
+      map(response => response.data)
+    );
+  }
 }

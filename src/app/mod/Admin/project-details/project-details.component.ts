@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+} from '@angular/core';
 import { ITaskRes } from '../../../core/domain/models/ITask';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,7 +29,6 @@ import { TasksUpdateService } from '../../../core/services/tasks/tasks-update.se
     HttpProjectsRepository,
     TasksUseCases,
     HttpTasksRepository,
-
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -47,18 +51,21 @@ export default class ProjectDetailsComponent {
     private cdr: ChangeDetectorRef
   ) {
     this.id = +this.route.snapshot.params['projectId'];
-    this.projectsUseCases.getMonthsProjects(this.id.toString()).subscribe(
-      (data) => {
+    this.projectsUseCases
+      .getMonthsProjects(this.id.toString())
+      .subscribe((data) => {
         this.año = data.año;
         this.mesI = data.mesInicio;
         this.mesF = data.mesFin;
-        this.meses = this.obtenerDiasPorRangoDeMeses(this.año, this.mesI, this.mesF);
-      }
-    );
+        this.meses = this.obtenerDiasPorRangoDeMeses(
+          this.año,
+          this.mesI,
+          this.mesF
+        );
+      });
 
     this.dataTasks$ = this.tasksUseCases.getTasksForProject(this.id);
   }
-
 
   ngOnInit(): void {
     this.tasksUpdateService.taskUpdated$.subscribe(() => {
@@ -67,8 +74,10 @@ export default class ProjectDetailsComponent {
     });
   }
 
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     this.dialog.open(ModalNewTask, {
       width: '500px',
       enterAnimationDuration,
@@ -77,11 +86,15 @@ export default class ProjectDetailsComponent {
     });
   }
 
-  changeGantt(){
-    this.showGantt = !this.showGantt
+  changeGantt() {
+    this.showGantt = !this.showGantt;
   }
 
-  obtenerDiasPorRangoDeMeses(anio: number,mesInicial: number,mesFinal: number): IMes[] {
+  obtenerDiasPorRangoDeMeses(
+    anio: number,
+    mesInicial: number,
+    mesFinal: number
+  ): IMes[] {
     const meses: IMes[] = [];
     for (let i = mesInicial; i <= mesFinal; i++) {
       const nombreMes = new Date(anio, i - 1).toLocaleString('es-ES', {
@@ -124,32 +137,37 @@ export default class ProjectDetailsComponent {
     return dia;
   }
 
-  obtenerFechaAvance(fechaFin:string):number{
+  obtenerFechaAvance(fechaFin: string): number {
     let band = 0;
     const fFin = new Date(fechaFin);
-    const fActual = new Date()
+    const fActual = new Date();
     const diasDiferencia = this.calcularRangoDeDias(fFin);
 
-    if (fActual > fFin){
+    if (fActual > fFin) {
       band = 1;
-    }else{
-      if(diasDiferencia <= 3){
-        band=3;
-      }else{
-        band=2;
+    } else {
+      if (diasDiferencia <= 3) {
+        band = 3;
+      } else {
+        band = 2;
       }
     }
     return band;
   }
 
-  calcularRangoDeDias(fechaTermino:Date) {
-
+  calcularRangoDeDias(fechaTermino: Date) {
     var fechaActual = new Date();
     var tiempoTermino = fechaTermino.getTime();
     var tiempoActual = fechaActual.getTime();
     var diferenciaEnMilisegundos = tiempoTermino - tiempoActual;
-    var diferenciaEnDias = Math.ceil(diferenciaEnMilisegundos / (1000 * 3600 * 24));
+    var diferenciaEnDias = Math.ceil(
+      diferenciaEnMilisegundos / (1000 * 3600 * 24)
+    );
 
     return diferenciaEnDias;
-}
+  }
+
+  goBack(): void {
+    window.history.back();
+  }
 }

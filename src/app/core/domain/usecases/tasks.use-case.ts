@@ -3,8 +3,6 @@ import { Observable } from 'rxjs';
 import { HttpTasksRepository } from '../repositories/tasks-repository';
 import { ITaskRes } from '../models/ITask';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class TasksUseCases {
   constructor(private tasksRepository: HttpTasksRepository) {}
@@ -19,6 +17,10 @@ export class TasksUseCases {
 
   addNewTask(task: ITaskRes): Observable<any> {
     return this.tasksRepository.addNewTask(task);
+  }
+
+  getTaskById(taskId: number): Observable<ITaskRes> {
+    return this.tasksRepository.getTaskById(taskId);
   }
 
 }

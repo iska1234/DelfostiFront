@@ -1,0 +1,46 @@
+<div class="rounded-xl h-auto">
+  <button (click)="goBack()" mat-raised-button color="primary" class="text-white p-2 mb-8">
+    Volver
+  </button>
+  @if (dataTask$ | async; as data) {
+  <div class="detalle flex flex-col bg-white border p-2 rounded-lg m-2">
+    <div class="text-start py-2 border-b mb-2">
+      <span class="font-bold text-xl">{{ data.taskname }}</span>
+    </div>
+    <div class="flex flex-row gap-3">
+      <div class="flex flex-col flex-1 gap-2">
+        <div class="flex gap-4" *ngIf="data.responsible_name">
+          <span class="font-bold">Encargado: </span>
+          <span>{{ data.responsible_name }}</span>
+        </div>
+        <div class="flex gap-4" *ngIf="!data.responsible_name">
+          <span class="font-bold">Encargado: </span>
+          <span>No se ha asignado un encargado</span>
+        </div>
+        <div class="flex gap-4">
+          <span class="font-bold">Descripción de la tarea: </span>
+          <span>{{ data.taskdescription }}</span>
+        </div>
+        <div>
+          <span class="font-bold">Avance: </span>
+          <span>{{ formatearAvance(data.advance || 0) }}</span>
+        </div>
+      </div>
+      <div class="flex flex-col flex-1 gap-2">
+        <div>
+          <span class="font-bold">Estado: </span>
+          <span>{{ data.state }}</span>
+        </div>
+        <div class="w-52 flex justify-between">
+          <span class="font-bold">Fecha de inicio: </span>
+          <span>{{ data.startdate }}</span>
+        </div>
+        <div class="w-52 flex justify-between">
+          <span class="font-bold">Fecha de Fin: </span>
+          <span>{{ data.enddate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -9,5 +9,6 @@ export interface ITaskRes {
   advance?: number;
   state?: string;
   responsible: number;
+  responsible_name?: string;
 
 }
