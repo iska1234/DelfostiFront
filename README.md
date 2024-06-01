@@ -1,4 +1,4 @@
-<h1 align="center">Kudos Software</h1>
+<h1 align="center">Delfosti Software</h1>
 
 <p align="center">This project involves the development of a user-friendly interface using Angular 17, allowing users to create and manage projects and tasks effortlessly. Users can easily create projects, add tasks to them, and track the progress of each task. The interface provides intuitive controls for marking tasks as in progress or completed, enhancing user experience and productivity.
     <br> 
@@ -7,6 +7,29 @@
 URL Software: https://delfosti-software.netlify.app
 
 Backend Repository: https://github.com/iska1234/DelfostiBack
+
+## Credentials I was using:
+
+Admin Role:
+
+Email: sadhuisaac1@gmail.com
+
+Password:  73429620Ce
+
+
+User Role:
+
+Email: trabajador3@gmail.com
+
+Password:   12346578A
+
+
+Jefe Role:
+
+Email:  trabajador1@gmail.com
+
+Password:   12346578A
+
 
 ### Notes: The server sometimes becomes down which requests can take up to 50 seconds maximum due to relogging. Thanks
 
