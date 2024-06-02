@@ -88,7 +88,8 @@ export class ModalNewProject {
 
     this.projectsUseCases.saveNewProject(projectData).subscribe(
       (response) => {
-        this.toastr.success('Proyecto registrado exitosamente.', 'Success');
+        const responsibleId = this.addNewProjectForm.get('responsible')?.value;
+        this.updateUserRole(responsibleId);
         this.projectUpdateService.notifyProjectUpdated();
         this.dialogRef.close();
       },
@@ -98,5 +99,16 @@ export class ModalNewProject {
     ).add(() => {
       this.isSubmitting = false;
     });
+  }
+
+  updateUserRole(userId: number): void {
+    this.adminUseCases.updateJefeRole(userId).subscribe(
+      (response) => {
+        this.toastr.success('Proyecto registrado exitosamente.', 'Success');
+      },
+      (error) => {
+
+      }
+    );
   }
 }

@@ -14,4 +14,8 @@ export class AdminUseCases {
   getUserProjectId(userId: number): Observable<number> {
     return this.adminRepository.getUserProjectId(userId);
   }
+
+  updateJefeRole(userId: number): Observable<any> {
+    return this.adminRepository.updateJefeRole(userId);
+  }
 }

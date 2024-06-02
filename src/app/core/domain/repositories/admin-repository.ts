@@ -30,4 +30,12 @@ export class HttpAdminRepository implements AdminRepository {
       .get<any>(url, { headers })
       .pipe(map((response) => response.projectId?.projectid));
   }
+
+  updateJefeRole(userId: number): Observable<any> {
+    const url = `${BASE_URL}/admin/update/jefe/${userId}`;
+    const headers = getAuthHeaders(this.tokenService);
+    return this.http
+      .patch<any>(url, {}, { headers })
+      .pipe(map((response) => response.data));
+  }
 }
